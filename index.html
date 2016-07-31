@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="../../build/react.js"></script>
+  <script src="../../build/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id='mountNode'></div>
+<script type="text/babel">
+  var TodoList = React.createClass({
+    render: function () {
+      var createItem = function (itemText) {
+        return <li>{itemText}</li>
+      };
+      return <ul>{this.props.items.map(createItem)}</ul>
+    }
+  });
+
+  var TodoApp = React.createClass({
+    getInitialState: function () {
+      return {items: [], text: ''}
+    },
+    onChange: function (e) {
+      this.setState({text: e.target.value});
+    },
+    handleSubmit: function (e) {
+      e.preventDefault();
+      this.state.items.push([this.state.text]);
+      this.setState({text: ''});
+    },
+    render: function () {
+      return (
+          <div>
+            <h3>ToDoList</h3>
+            <form onSubmit={this.handleSubmit}>
+              <input onChange={this.onChange} value={this.state.text}/>
+            </form>
+            <TodoList items={this.state.items}/>
+          </div>
+      );
+    }
+  });
+  ReactDOM.render(<TodoApp />, document.getElementById('mountNode'));
+</script>
+</body>
+</html>
