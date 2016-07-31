@@ -4,16 +4,23 @@
   <script src="../../build/react.js"></script>
   <script src="../../build/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div id='mountNode'></div>
 <script type="text/babel">
   var TodoList = React.createClass({
+
     render: function () {
-      var createItem = function (itemText) {
-        return <li>{itemText}</li>
+      var createItems = function (itemText) {
+        return <li className="list-group-item">{itemText}</li>
       };
-      return <ul>{this.props.items.map(createItem)}</ul>
+      return (
+          <ul className="list-group">
+            {this.props.items.map(createItems)}
+          </ul>
+      );
     }
   });
 
@@ -31,13 +38,19 @@
     },
     render: function () {
       return (
-          <div>
-            <h3>ToDoList</h3>
-            <form onSubmit={this.handleSubmit}>
-              <input onChange={this.onChange} value={this.state.text}/>
-            </form>
-            <TodoList items={this.state.items}/>
+          <div className="panel panel-primary">
+            <div className="panel-heading">ToDoList</div>
+
+            <div className="panel-body">
+              <form onSubmit={this.handleSubmit}>
+                <input onChange={this.onChange} value={this.state.text}/>
+              </form>
+              <TodoList items={this.state.items}/>
+            </div>
+
+            <div className="panel-footer">Panel footer</div>
           </div>
+
       );
     }
   });
